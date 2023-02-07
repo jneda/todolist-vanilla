@@ -20,6 +20,8 @@ li::marker {
 }
 
 li span {
+  display: inline-block;
+  width: 14rem;
   margin: 0 0.8rem;
 }
 
