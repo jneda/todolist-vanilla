@@ -7,16 +7,18 @@ L'application doit permettre à l'utilisateur de rentrer des nouvelles tâches v
 Objectifs supplémentaires : 
 - Avoir un bouton pour dire que la tâche a été effectuée
 - Avoir un bouton la supprimer
--Pouvoir éditer la tâche
+- Pouvoir éditer la tâche
 
 Vous pouvez utiliser Bootstrap (modifié)
  */
 
 import './style.css';
 
-let tasks = [];
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+console.log(tasks);
 
 const tasksList = document.querySelector("#tasks-list");
+updateTasksList();
 
 const addTaskForm = document.querySelector('#add-task');
 addTaskForm.addEventListener('submit', addTask);
@@ -34,6 +36,7 @@ function addTask(e) {
     id: `${Date.now()}-${tasks.length}`,
     description: userInput,
   });
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 
   updateTasksList();
   for (const task of tasks) {
@@ -52,6 +55,8 @@ function editTask(e) {
   taskItem.innerHTML = "";
   const updatedTask = tasks.find(task => task.id === taskItem.id);
   updatedTask.description = userInput;
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  console.log(localStorage.getItem("tasks"));
   updateTasksList();
 }
 
@@ -130,6 +135,7 @@ function makeTaskEditor(e) {
   const taskEditor = document.createElement("form");
   const editorLabel = document.createElement("label");
   editorLabel.setAttribute("for", "edit-task");
+  editorLabel.textContent = "Modifier: "
   const editorButton = document.createElement("button");
   editorButton.textContent = "💾";
 

@@ -55,6 +55,8 @@ h1 {
 
 #app {
   max-width: 1280px;
+  min-width: 320px;
+  width: 60%;
   margin: 0 auto;
   padding: 2rem;
 }
@@ -63,7 +65,8 @@ h1 {
   flex-direction: row;
 }
 
-#add-task label {
+#add-task label,
+#add-task input {
   display: block;
   margin-bottom: 0.4rem;
 }
@@ -72,12 +75,28 @@ h1 {
   margin-bottom: 0.4rem;
 }
 
+#tasks-list span {
+  flex: 1;
+  padding-left: 0.4rem;
+}
+
+#tasks-list form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#tasks-list button {
+  padding: 0.2rem 0.4rem;
+}
+
 #tasks-list button:nth-of-type(2) {
   margin-left: 0.4rem;
 }
 
 input {
-  padding: 0.6em 1.2em;
+  padding: 0.4em 0.6em;
   font-size: 1em;
 }
 
