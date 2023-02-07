@@ -12,10 +12,10 @@ Objectifs supplémentaires :
 Vous pouvez utiliser Bootstrap (modifié)
  */
 
+import '@picocss/pico';
 import './style.css';
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-console.log(tasks);
 
 const tasksList = document.querySelector("#tasks-list");
 updateTasksList();
@@ -32,12 +32,14 @@ function addTask(e) {
   }
   taskInput.value = "";
 
+  // update localStorage
   tasks.push({
     id: `${Date.now()}-${tasks.length}`,
     description: userInput,
   });
   localStorage.setItem("tasks", JSON.stringify(tasks));
 
+  // update display
   updateTasksList();
   for (const task of tasks) {
     console.log(task.id);
@@ -47,16 +49,18 @@ function addTask(e) {
 function editTask(e) {
   e.preventDefault();
   const taskItem = e.target.parentElement;
+
   const taskInput = e.target.elements['edit-task'];
   const userInput = taskInput.value.trim();
   if (userInput === "") {
     return;
   }
   taskItem.innerHTML = "";
+
   const updatedTask = tasks.find(task => task.id === taskItem.id);
   updatedTask.description = userInput;
   localStorage.setItem("tasks", JSON.stringify(tasks));
-  console.log(localStorage.getItem("tasks"));
+
   updateTasksList();
 }
 
@@ -80,22 +84,25 @@ function makeTaskListItem(task) {
   taskDescription.textContent = task.description;
   listItem.appendChild(taskDescription);
 
-  listItem.appendChild(makeButtons());
+  makeButtons().forEach(button => listItem.appendChild(button));
 
   return listItem;
 }
 
 function makeButtons() {
   const icons = { edit: '📝', delete: '🗑️' };
-  const buttonsDiv = document.createElement("div");
+  const buttons = [];
   for (const key in icons) {
     const button = document.createElement('button');
     button.setAttribute('name', key);
+    // Pico CSS 
+    button.setAttribute("role", "button");
+    button.classList.add("secondary", "outline");
     button.textContent = icons[key];
     button.addEventListener("click", taskButtonClickHandler);
-    buttonsDiv.appendChild(button);
+    buttons.push(button);
   }
-  return buttonsDiv;
+  return buttons;
 }
 
 function taskButtonClickHandler(e) {
@@ -108,16 +115,17 @@ function taskButtonClickHandler(e) {
 }
 
 function deleteButtonClickHandler(e) {
-  const taskId = e.target.parentElement.parentElement.id;
+  const taskId = e.target.parentElement.id;
   console.log(`TODO: delete task #${taskId}`);
   tasks = tasks.filter(task => task.id !== taskId);
   console.log(tasks);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
   updateTasksList();
 }
 
 function editButtonClickHandler(e) {
   const taskEditor = makeTaskEditor(e);
-  const taskItem = e.target.parentElement.parentElement;
+  const taskItem = e.target.parentElement;
   taskItem.innerHTML = "";
   taskItem.appendChild(taskEditor);
 
@@ -125,19 +133,22 @@ function editButtonClickHandler(e) {
 }
 
 function makeTaskEditor(e) {
-  const span = e.target.parentElement.previousElementSibling;
+  const span = e.target.previousElementSibling;
   const taskDescription = span.textContent;
 
   const inputElement = document.createElement("input");
   inputElement.setAttribute("id", "edit-task");
   inputElement.value = taskDescription;
+  inputElement.style.width = "90%";
 
   const taskEditor = document.createElement("form");
   const editorLabel = document.createElement("label");
   editorLabel.setAttribute("for", "edit-task");
-  editorLabel.textContent = "Modifier: "
+  editorLabel.textContent = "Modifier: ";
   const editorButton = document.createElement("button");
   editorButton.textContent = "💾";
+  editorButton.setAttribute("role", "button");
+  editorButton.classList.add("secondary", "outline");
 
   taskEditor.appendChild(editorLabel);
   taskEditor.appendChild(inputElement);
