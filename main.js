@@ -41,9 +41,6 @@ function addTask(e) {
 
   // update display
   updateTasksList();
-  for (const task of tasks) {
-    console.log(task.id);
-  }
 }
 
 function editTask(e) {
