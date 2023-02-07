@@ -15,6 +15,10 @@
   -webkit-text-size-adjust: 100%;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -32,36 +36,49 @@ body {
   min-height: 100vh;
 }
 
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  /* font-size: 3.2em; */
+  line-height: 2;
+  text-align: center;
 }
 
 #app {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
+#add-task {
+  flex-direction: row;
 }
 
-.card {
-  padding: 2em;
+#add-task label {
+  display: block;
+  margin-bottom: 0.4rem;
 }
 
-.read-the-docs {
-  color: #888;
+#tasks-list li {
+  margin-bottom: 0.4rem;
+}
+
+#tasks-list button:nth-of-type(2) {
+  margin-left: 0.4rem;
+}
+
+input {
+  padding: 0.6em 1.2em;
+  font-size: 1em;
 }
 
 button {
