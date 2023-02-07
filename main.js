@@ -43,6 +43,15 @@ function addTask(e) {
   updateTasksList();
 }
 
+function editButtonClickHandler(e) {
+  const taskEditor = makeTaskEditor(e);
+  const taskItem = e.target.parentElement;
+  taskItem.innerHTML = "";
+  taskItem.appendChild(taskEditor);
+
+  taskEditor.addEventListener("submit", editTask);
+}
+
 function editTask(e) {
   e.preventDefault();
   const taskItem = e.target.parentElement;
@@ -58,6 +67,14 @@ function editTask(e) {
   updatedTask.description = userInput;
   localStorage.setItem("tasks", JSON.stringify(tasks));
 
+  updateTasksList();
+}
+
+function deleteButtonClickHandler(e) {
+  const taskId = e.target.parentElement.id;
+  tasks = tasks.filter(task => task.id !== taskId);
+  
+  localStorage.setItem("tasks", JSON.stringify(tasks));
   updateTasksList();
 }
 
@@ -109,23 +126,6 @@ function taskButtonClickHandler(e) {
   if (e.target.name === "edit") {
     return editButtonClickHandler(e);
   }
-}
-
-function deleteButtonClickHandler(e) {
-  const taskId = e.target.parentElement.id;
-  tasks = tasks.filter(task => task.id !== taskId);
-  
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  updateTasksList();
-}
-
-function editButtonClickHandler(e) {
-  const taskEditor = makeTaskEditor(e);
-  const taskItem = e.target.parentElement;
-  taskItem.innerHTML = "";
-  taskItem.appendChild(taskEditor);
-
-  taskEditor.addEventListener("submit", editTask);
 }
 
 function makeTaskEditor(e) {
