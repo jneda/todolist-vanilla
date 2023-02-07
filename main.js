@@ -116,7 +116,6 @@ function taskButtonClickHandler(e) {
 
 function deleteButtonClickHandler(e) {
   const taskId = e.target.parentElement.id;
-  console.log(`TODO: delete task #${taskId}`);
   tasks = tasks.filter(task => task.id !== taskId);
   console.log(tasks);
   localStorage.setItem("tasks", JSON.stringify(tasks));
