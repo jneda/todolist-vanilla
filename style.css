@@ -7,6 +7,10 @@ h1 {
   margin: 2rem 0;
 }
 
+form {
+  max-width: 30rem;
+}
+
 li {
   width: 100%;
 }
