@@ -45,11 +45,11 @@ function addTask(e) {
 
 function editButtonClickHandler(e) {
   const taskEditor = makeTaskEditor(e);
+  taskEditor.addEventListener("submit", editTask);
+  
   const taskItem = e.target.parentElement;
   taskItem.innerHTML = "";
   taskItem.appendChild(taskEditor);
-
-  taskEditor.addEventListener("submit", editTask);
 }
 
 function editTask(e) {
